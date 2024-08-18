@@ -71,43 +71,35 @@
 
       const layer01 = new GeoJSONLayer({
         url: url,
-        title: "الامانة",
+        title: "البيانات الوصفية",
         popupTemplate: {
-          title: "{البلدية}",
+          title: "{Amanaa}, {Baladya}",
           content: [
             {
               type: "fields",
               fieldInfos: [
                 {
-                  fieldName: "اسم المراقب",
+                  fieldName: "MoraqebName",
                   label: "اسم المراقب",
                 },
                 {
-                  fieldName: "هوية المراقب",
+                  fieldName: "MoraqebNumber",
                   label: "هوية المراقب",
                 },
                 {
-                  fieldName: "تاريخ ووقت الاسناد",
+                  fieldName: "timeanddate",
                   label: "تاريخ ووقت الاسناد",
                 },
                 {
-                  fieldName: "نوع الرقابة",
+                  fieldName: "reqabaType",
                   label: "نوع الرقابة",
                 },
                 {
-                  fieldName: "حالة الزيارة",
-                  label: "حالة الزيارة",
-                },
-                {
-                  fieldName: "نوع الزيارة",
+                  fieldName: "visitingType",
                   label: "نوع الزيارة",
                 },
                 {
-                  fieldName: "اسم نشاط الايزيك",
-                  label: "اسم نشاط الايزيك",
-                },
-                {
-                  fieldName: "اسم النشاط التفصيلي",
+                  fieldName: "activityDetailedName",
                   label: "اسم النشاط التفصيلي",
                 },
                 // {
