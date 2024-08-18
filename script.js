@@ -17,7 +17,7 @@
 
   async function initializeHeatMap() {
     try {
-      const [esriConfig, intl, Map, MapView, reactiveUtils, GeoJSONLayer,] =
+      const [esriConfig, intl, Map, MapView, reactiveUtils, GeoJSONLayer, FeatureLayer] =
         await Promise.all([
           loadModule("esri/config"),
           loadModule("esri/intl"),
@@ -25,11 +25,13 @@
           loadModule("esri/views/MapView"),
           loadModule("esri/core/reactiveUtils"),
           loadModule("esri/layers/GeoJSONLayer"),
+          loadModule("esri/layers/FeatureLayer"),
         ]);
 
       intl.setLocale("ar");
       esriConfig.apiKey = "AAPK67a9b2041fcc449d90ab91d6bae4a156HTaBtzlYSKLe8L-zBuIgrSGvxOopzVQEtdwVrlp6RKN9Rrq_y2qkTax7Do1cHqm9";
 
+      let url = "https://services3.arcgis.com/AtFD5NjBs72VpMjN/arcgis/rest/services/layerss/FeatureServer/0";
       const renderer = {
         type: "heatmap",
         colorStops: [
@@ -67,10 +69,8 @@
       });
 
 
-
-      $.getJSON("./1010.json", function (data) {
-        let layer01 = new GeoJSONLayer({
-          url: "./1010.json",
+        let layer01 = new FeatureLayer({
+          url: url,
           title: "البيانات الوصفية",
           popupTemplate: {
             title: "{الامانة}, {البلدية}",
@@ -178,7 +178,119 @@
 
         });
 
-      });
+
+
+      // $.getJSON("./1010.json", function (data) {
+      //   let layer01 = new GeoJSONLayer({
+      //     url: "./1010.json",
+      //     title: "البيانات الوصفية",
+      //     popupTemplate: {
+      //       title: "{الامانة}, {البلدية}",
+      //       content: [
+      //         {
+      //           type: "fields",
+      //           fieldInfos: [
+      //             {
+      //               fieldName: "رقم_الزيارة",
+      //               label: "رقم_الزيارة",
+      //             },
+      //             {
+      //               fieldName: "اسم_المراقب",
+      //               label: "اسم المراقب",
+      //             },
+      //             {
+      //               fieldName: "هوية_المراقب",
+      //               label: "هوية المراقب",
+      //             },
+      //             {
+      //               fieldName: "تاريخ_ووقت_الاسناد",
+      //               label: "تاريخ ووقت الاسناد",
+      //             },
+      //             {
+      //               fieldName: "نوع_الرقابة",
+      //               label: "نوع الرقابة",
+      //             },
+      //             {
+      //               fieldName: "حالة_الزيارة",
+      //               label: "حالة الزيارة",
+      //             },
+      //             {
+      //               fieldName: "نوع_الزيارة",
+      //               label: "نوع_الزيارة",
+      //             },
+      //             {
+      //               fieldName: "اسم_المراجع",
+      //               label: "اسم_المراجع",
+      //             },
+      //             {
+      //               fieldName: "اسم_المعتمد",
+      //               label: "اسم_المعتمد",
+      //             },
+      //             {
+      //               fieldName: "اسم_النشاط_التفصيلي",
+      //               label: "اسم النشاط التفصيلي",
+      //             },
+      //             {
+      //               fieldName: "رقم_الزيارة",
+      //               label: "رقم_الزيارة",
+      //             },
+      //           ],
+      //         },
+      //       ],
+      //     },
+      //     renderer: renderer,
+      //     labelsVisible: true,
+      //   });
+      //   map.add(layer01);
+
+      //   Promise.all([
+      //     view.whenLayerView(layer01),
+      //     // view.whenLayerView(fLayer2)
+      //   ]).then(([layerView1, layerView2]) => {
+      //     return Promise.all(
+      //       [
+      //         reactiveUtils.whenOnce(() => !layerView1.updating),
+      //         // reactiveUtils.whenOnce(() => !layerView2.updating)
+      //       ]
+      //     );
+      //   }).then(() => {
+      //     console.log("done updating")
+      //     view.goTo(
+      //       {
+      //         target: layer01.fullExtent,
+      //       },
+      //       {
+      //         duration: 2000,
+      //       }
+      //     );
+
+      //     const heatmapRenderer = layer01.renderer.clone();
+      //     // The following simple renderer will render all points as simple
+      //     // markers at certain scales
+      //     const simpleRenderer = {
+      //       type: "simple",
+      //       symbol: {
+      //         type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+      //         url: "https://daraobeirne.github.io/kisspng-drawing-pin-world-map-logo-push-vector-5ae029f6ddeaf4.198342921524640246909.png",
+      //         width: "30px",
+      //         height: "30px"
+      //       }
+      //     };
+
+      //     // When the scale is larger than 1:72,224 (zoomed in passed that scale),
+      //     // then switch from a heatmap renderer to a simple renderer. When zoomed
+      //     // out beyond that scale, switch back to the heatmap renderer
+      //     reactiveUtils.watch(
+      //       () => view.scale,
+      //       (scale) => {
+      //         layer01.renderer = scale <= 72224 ? simpleRenderer : heatmapRenderer;
+      //       }
+      //     );
+
+
+      //   });
+
+      // });
 
 
 
@@ -237,6 +349,7 @@
         Search,
         Home,
         LayerList,
+        Legend
       ] = await Promise.all([
         loadModule("esri/widgets/Fullscreen"),
         loadModule("esri/widgets/BasemapGallery"),
@@ -246,6 +359,7 @@
         loadModule("esri/widgets/Search"),
         loadModule("esri/widgets/Home"),
         loadModule("esri/widgets/LayerList"),
+        loadModule("esri/widgets/Legend"),
       ]);
 
       var basemapGallery = new BasemapGallery({
@@ -285,6 +399,12 @@
       });
       view.ui.add(homeWidget, "top-left");
 
+      let legend = new Legend({
+        view: view
+      });
+      
+      view.ui.add(legend, "bottom-left");
+
       var layerList = new LayerList({
         view: view,
         listItemCreatedFunction: function (event) {
@@ -307,7 +427,7 @@
         expandTooltip: "قائمه الطبقات",
         collapseTooltip: "اغلاق",
       });
-
+      Expand5.expanded = true;
       view.ui.add([Expand5], { position: "top-left", index: 6 });
 
       await view.when();
