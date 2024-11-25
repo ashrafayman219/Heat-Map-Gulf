@@ -31,7 +31,7 @@
       intl.setLocale("ar");
       esriConfig.apiKey = "AAPK67a9b2041fcc449d90ab91d6bae4a156HTaBtzlYSKLe8L-zBuIgrSGvxOopzVQEtdwVrlp6RKN9Rrq_y2qkTax7Do1cHqm9";
 
-      let url = "https://services3.arcgis.com/AtFD5NjBs72VpMjN/arcgis/rest/services/layerss/FeatureServer/0";
+      let url = "https://services7.arcgis.com/5laxbRHagCrsTh6t/arcgis/rest/services/c1010_JSONToFeatures/FeatureServer/0";
       const renderer = {
         type: "heatmap",
         colorStops: [
